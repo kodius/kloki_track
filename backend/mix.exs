@@ -46,7 +46,11 @@ defmodule Backend.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:absinthe, "~> 1.7"},
+      {:absinthe_plug, "~> 1.5"},
+      {:guardian, "~> 2.3"},
+      {:argon2_elixir, "~> 4.0"}
     ]
   end
 
