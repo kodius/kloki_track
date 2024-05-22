@@ -13,7 +13,9 @@ defmodule BackendWeb.Schema.Types do
     field :name, :string
     field :public, :boolean
     field :archived, :boolean
-    field :client_id, :id
-    field :client_name, :string
+
+    field :client, :client do
+      resolve(&BackendWeb.Resolvers.Project.resolve_client/3)
+    end
   end
 end

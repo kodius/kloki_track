@@ -23,7 +23,7 @@ defmodule Backend.Tracker do
   def get_client!(id), do: Repo.get!(Client, id)
 
   def list_projects do
-    Repo.all(from p in Project, where: p.archived == false)
+    Repo.all(from p in Project, where: p.archived == false, preload: [:client])
   end
 
   def create_project(attrs \\ %{}) do
