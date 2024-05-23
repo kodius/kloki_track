@@ -1,3 +1,6 @@
 {
-	"/": []
+	"/": [],
+	"/clients": [
+		"src/routes/clients/+page.server.ts"
+	]
 }

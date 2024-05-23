@@ -1,4 +1,4 @@
- <script>
+<script>
   import "../app.css";
 </script>
 
@@ -7,13 +7,11 @@
     <nav>
       <ul>
         <li class="mb-4"><a href="/" class="text-blue-500 hover:text-blue-700">Home</a></li>
-        <li class="mb-4"><a href="/about" class="text-blue-500 hover:text-blue-700">About</a></li>
-        <li class="mb-4"><a href="/contact" class="text-blue-500 hover:text-blue-700">Contact</a></li>
+        <li class="mb-4"><a href="/clients" class="text-blue-500 hover:text-blue-700">Clients</a></li>
       </ul>
     </nav>
   </div>
-  <div class="flex-1 p-5 flex items-center justify-center">
-   <slot/>
+  <div class="flex-1 p-5 flex flex-col items-center">
+    <slot/>
   </div>
 </div>
-

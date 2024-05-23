@@ -4,7 +4,12 @@ defmodule Backend.Tracker do
   alias Backend.Tracker.{Client, Project}
 
   def list_clients do
-    Repo.all(from c in Client, where: c.archived == false)
+    Repo.all(
+      from c in Client,
+        where: c.archived == false,
+        # Ensure clients are ordered by ID in ascending order
+        order_by: [asc: c.id]
+    )
   end
 
   def create_client(attrs \\ %{}) do
@@ -23,7 +28,13 @@ defmodule Backend.Tracker do
   def get_client!(id), do: Repo.get!(Client, id)
 
   def list_projects do
-    Repo.all(from p in Project, where: p.archived == false, preload: [:client])
+    Repo.all(
+      from p in Project,
+        where: p.archived == false,
+        # Ensure projects are ordered by ID in ascending order
+        order_by: [asc: p.id],
+        preload: [:client]
+    )
   end
 
   def create_project(attrs \\ %{}) do

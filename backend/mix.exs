@@ -50,7 +50,8 @@ defmodule Backend.MixProject do
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
       {:guardian, "~> 2.3"},
-      {:argon2_elixir, "~> 4.0"}
+      {:argon2_elixir, "~> 4.0"},
+      {:cors_plug, "~> 2.0"}
     ]
   end
 
