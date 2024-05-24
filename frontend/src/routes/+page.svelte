@@ -4,12 +4,14 @@
   import * as Select from "$lib/components/ui/select/index.js";
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
+	import { getClients } from '$lib/stores/clientsStore.svelte';
 
-  import type { Client } from '$lib/gql/generated/graphql';
+  let clients = getClients();
+  let localClients = $state([]);
 
-  const { data } = $props() as { data: {clients: Client[]}  };
-
-  let clients = $state(data.clients.map(client => ({ ...client, isEditing: false })));
+  $effect(() => {
+    localClients = clients.map(client => ({ ...client, isEditing: false }));
+  });
 </script>
 
 <Card.Root class="w-[350px]">
@@ -31,10 +33,10 @@
               <Select.Value placeholder="Select" />
             </Select.Trigger>
             <Select.Content>
-              {#each clients as client}
-                <Select.Item value={client.id} label={client.name ?? 'Unnamed Client'}
-                  >{client.name}</Select.Item
-                >
+              {#each localClients as client}
+                <Select.Item value={client.id} label={client.name ?? 'Unnamed Client'}>
+                  {client.name}
+                </Select.Item>
               {/each}
             </Select.Content>
           </Select.Root>
