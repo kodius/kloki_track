@@ -5,20 +5,11 @@
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
 
-  const clients = [
-    {
-      value: "optilogic",
-      label: "Optilogic"
-    },
-    {
-      value: "hbi",
-      label: "HBI"
-    },
-    {
-      value: "poplin",
-      label: "Poplin"
-    }
-  ];
+  import type { Client } from '$lib/gql/generated/graphql';
+
+  const { data } = $props() as { data: {clients: Client[]}  };
+
+  let clients = $state(data.clients.map(client => ({ ...client, isEditing: false })));
 </script>
 
 <Card.Root class="w-[350px]">
@@ -41,8 +32,8 @@
             </Select.Trigger>
             <Select.Content>
               {#each clients as client}
-                <Select.Item value={client.value} label={client.label}
-                  >{client.label}</Select.Item
+                <Select.Item value={client.id} label={client.name ?? 'Unnamed Client'}
+                  >{client.name}</Select.Item
                 >
               {/each}
             </Select.Content>
