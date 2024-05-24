@@ -7,7 +7,6 @@ defmodule Backend.Tracker do
     Repo.all(
       from c in Client,
         where: c.archived == false,
-        # Ensure clients are ordered by ID in ascending order
         order_by: [asc: c.id]
     )
   end

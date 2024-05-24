@@ -1,20 +1,12 @@
 // @ts-nocheck
-// src/routes/+page.ts
-import type { PageLoad } from './$types';
+import type { LayoutLoad } from './$types';
 import { client } from '$lib/graphql-client';
+import { GetClientsDocument } from '$lib/gql/generated/graphql';
 
-const query = `
-  query {
-    clients {
-      id
-      name
-    }
-  }
-`;
 
 export const load = async () => {
 	try {
-		const data = await client.request(query);
+		const data = await client.request(GetClientsDocument);
 		return {
 			clients: data.clients
 		};
@@ -25,4 +17,4 @@ export const load = async () => {
 		};
 	}
 };
-;null as any as PageLoad;
+;null as any as LayoutLoad;

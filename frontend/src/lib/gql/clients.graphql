@@ -1,0 +1,13 @@
+query getClients {
+	clients {
+		id
+		name
+	}
+}
+
+mutation updateClient($id: ID!, $name: String) {
+	updateClient(id: $id, name: $name) {
+		id
+		name
+	}
+}
