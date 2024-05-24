@@ -6,7 +6,6 @@
   let clients = $state<Client[]>([]);
 
   export async function fetchClients() {
-    console.log("FETCH")
     try {
       const response = await graphqlClient.request(GetClientsDocument);
       clients.splice(0, clients.length, ...response.clients);
