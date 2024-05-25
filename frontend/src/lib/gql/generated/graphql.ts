@@ -18,7 +18,7 @@ export type Scalars = {
 export type Client = {
   __typename?: 'Client';
   archived?: Maybe<Scalars['Boolean']['output']>;
-  id?: Maybe<Scalars['ID']['output']>;
+  id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
   projects?: Maybe<Array<Maybe<Project>>>;
 };
@@ -27,7 +27,7 @@ export type Project = {
   __typename?: 'Project';
   archived?: Maybe<Scalars['Boolean']['output']>;
   client?: Maybe<Client>;
-  id?: Maybe<Scalars['ID']['output']>;
+  id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
   public?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -90,7 +90,7 @@ export type RootQueryType = {
 export type GetClientsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetClientsQuery = { __typename?: 'RootQueryType', clients?: Array<{ __typename?: 'Client', id?: string | null, name?: string | null } | null> | null };
+export type GetClientsQuery = { __typename?: 'RootQueryType', clients?: Array<{ __typename?: 'Client', id: string, name?: string | null } | null> | null };
 
 export type UpdateClientMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -98,7 +98,7 @@ export type UpdateClientMutationVariables = Exact<{
 }>;
 
 
-export type UpdateClientMutation = { __typename?: 'RootMutationType', updateClient?: { __typename?: 'Client', id?: string | null, name?: string | null } | null };
+export type UpdateClientMutation = { __typename?: 'RootMutationType', updateClient?: { __typename?: 'Client', id: string, name?: string | null } | null };
 
 
 export const GetClientsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getClients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"clients"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetClientsQuery, GetClientsQueryVariables>;

@@ -7,11 +7,6 @@
 	import { getClients } from '$lib/stores/clientsStore.svelte';
 
   let clients = getClients();
-  let localClients = $state([]);
-
-  $effect(() => {
-    localClients = clients.map(client => ({ ...client, isEditing: false }));
-  });
 </script>
 
 <Card.Root class="w-[350px]">
@@ -33,7 +28,7 @@
               <Select.Value placeholder="Select" />
             </Select.Trigger>
             <Select.Content>
-              {#each localClients as client}
+              {#each clients as client}
                 <Select.Item value={client.id} label={client.name ?? 'Unnamed Client'}>
                   {client.name}
                 </Select.Item>

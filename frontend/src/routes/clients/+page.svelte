@@ -29,8 +29,6 @@
 				c.id === client.id ? { ...client, isEditing: false } : c
 			);
 		} catch (error) {
-			client.isEditing = true;
-      inputRef.focus()
 			toast.push('Error updating client.', {
 				theme: {
 					'--toastColor': 'mintcream',
@@ -38,6 +36,8 @@
 					'--toastBarHeight': 0
 				}
 			});
+      inputRef.focus()
+			client.isEditing = true;
 		}
 	}
 

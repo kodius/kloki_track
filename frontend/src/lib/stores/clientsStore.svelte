@@ -1,40 +1,24 @@
 <script context="module" lang="ts">
-  import { client as graphqlClient } from '$lib/graphql-client';
-  import { GetClientsDocument, UpdateClientDocument } from '$lib/gql/generated/graphql';
-  import type { Client } from '$lib/gql/generated/graphql';
+	import { client as graphqlClient } from '$lib/graphql-client';
+	import { GetClientsDocument, UpdateClientDocument } from '$lib/gql/generated/graphql';
+	import type { Client, GetClientsQuery, UpdateClientMutation } from '$lib/gql/generated/graphql';
+	import { updateItemInList, replaceArrayContent } from '$lib/utils';
 
-  let clients = $state<Client[]>([]);
+	let clients = $state<Client[]>([]);
 
-  export async function fetchClients() {
-    try {
-      const response = await graphqlClient.request(GetClientsDocument);
-      clients.splice(0, clients.length, ...response.clients);
-    } catch (error) {
-      console.error('Error fetching clients:', error);
-    }
-  }
-  export async function updateClient(updatedClient: Client) {
-    const originalClient = clients.find(client => client.id === updatedClient.id);
+	export async function fetchClients() {
+		const response = await graphqlClient.request<GetClientsQuery>(GetClientsDocument);
+		replaceArrayContent(clients, response.clients);
+	}
 
-    try {
-      await graphqlClient.request(UpdateClientDocument, { id: updatedClient.id, name: updatedClient.name });
-      const index = clients.findIndex(client => client.id === updatedClient.id);
-      if (index !== -1) {
-        clients[index] = updatedClient;
-      }
-    } catch (error) {
-      console.error('Error updating client:', error);
-      if (originalClient) {
-        originalClient.isEditing = true;  // Keep the client in edit mode
-      }
-      throw error;  // Rethrow to be caught in the component
-    }
-  }
+	export async function updateClient(updatedClient: Client) {
+		await graphqlClient.request<UpdateClientMutation>(UpdateClientDocument, { ...updatedClient });
+		updateItemInList(clients, updatedClient);
+	}
 
-  export function getClients() {
-    return clients;
-  }
+	export function getClients() {
+		return clients;
+	}
 
-  // Initial fetch
-  fetchClients();
+	fetchClients();
 </script>

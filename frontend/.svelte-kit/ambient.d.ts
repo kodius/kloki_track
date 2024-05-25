@@ -77,6 +77,7 @@ declare module '$env/static/private' {
 	export const USER_NAME: string;
 	export const SSH_AUTH_SOCK: string;
 	export const LOCAL_OFFICE_PATH: string;
+	export const npm_package_dependencies_lodash: string;
 	export const npm_package_dependencies_graphql_request: string;
 	export const __CF_USER_TEXT_ENCODING: string;
 	export const REDIS_URL: string;
@@ -107,6 +108,7 @@ declare module '$env/static/private' {
 	export const PWD: string;
 	export const npm_package_devDependencies_tailwindcss: string;
 	export const JAVA_HOME: string;
+	export const npm_package_devDependencies__types_lodash: string;
 	export const npm_package_scripts_preview: string;
 	export const EDITOR: string;
 	export const AWS_SECRET_ACCESS_KEY: string;
@@ -257,6 +259,7 @@ declare module '$env/dynamic/private' {
 		USER_NAME: string;
 		SSH_AUTH_SOCK: string;
 		LOCAL_OFFICE_PATH: string;
+		npm_package_dependencies_lodash: string;
 		npm_package_dependencies_graphql_request: string;
 		__CF_USER_TEXT_ENCODING: string;
 		REDIS_URL: string;
@@ -287,6 +290,7 @@ declare module '$env/dynamic/private' {
 		PWD: string;
 		npm_package_devDependencies_tailwindcss: string;
 		JAVA_HOME: string;
+		npm_package_devDependencies__types_lodash: string;
 		npm_package_scripts_preview: string;
 		EDITOR: string;
 		AWS_SECRET_ACCESS_KEY: string;
