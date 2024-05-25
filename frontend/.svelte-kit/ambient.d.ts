@@ -130,6 +130,7 @@ declare module '$env/static/private' {
 	export const AWS_ACCESS_KEY_ID: string;
 	export const npm_package_devDependencies_svelte_check: string;
 	export const npm_package_devDependencies_autoprefixer: string;
+	export const npm_package_devDependencies__zerodevx_svelte_toast: string;
 	export const COLORFGBG: string;
 	export const HOME: string;
 	export const SHLVL: string;
@@ -309,6 +310,7 @@ declare module '$env/dynamic/private' {
 		AWS_ACCESS_KEY_ID: string;
 		npm_package_devDependencies_svelte_check: string;
 		npm_package_devDependencies_autoprefixer: string;
+		npm_package_devDependencies__zerodevx_svelte_toast: string;
 		COLORFGBG: string;
 		HOME: string;
 		SHLVL: string;

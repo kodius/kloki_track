@@ -13,8 +13,9 @@
       console.error('Error fetching clients:', error);
     }
   }
-
   export async function updateClient(updatedClient: Client) {
+    const originalClient = clients.find(client => client.id === updatedClient.id);
+
     try {
       await graphqlClient.request(UpdateClientDocument, { id: updatedClient.id, name: updatedClient.name });
       const index = clients.findIndex(client => client.id === updatedClient.id);
@@ -23,6 +24,10 @@
       }
     } catch (error) {
       console.error('Error updating client:', error);
+      if (originalClient) {
+        originalClient.isEditing = true;  // Keep the client in edit mode
+      }
+      throw error;  // Rethrow to be caught in the component
     }
   }
 
