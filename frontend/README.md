@@ -14,7 +14,7 @@ yarn dev
 yarn dev --open
 ```
 
-Generating grapql definitions
+generating GraphQL definitions
 ```bash
 yarn types
 ```
