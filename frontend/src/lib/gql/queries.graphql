@@ -1,0 +1,21 @@
+query getClients {
+	clients {
+		id
+		name
+	}
+}
+
+mutation updateClient($id: ID!, $name: String) {
+	updateClient(id: $id, name: $name) {
+		id
+		name
+	}
+}
+
+mutation createProject($clientId: ID!, $name: String!, $public: Boolean) {
+	createProject(clientId: $clientId, name: $name, public: $public) {
+		id
+		name
+		public
+	}
+}
