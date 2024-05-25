@@ -9,6 +9,7 @@
 		<nav>
 			<ul>
 				<li class="mb-4"><a href="/" class="text-blue-500 hover:text-blue-700">Home</a></li>
+				<li class="mb-4"><a href="/projects" class="text-blue-500 hover:text-blue-700">Projects</a></li>
 				<li class="mb-4">
 					<a href="/clients" class="text-blue-500 hover:text-blue-700">Clients</a>
 				</li>
