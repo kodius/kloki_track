@@ -1,5 +1,7 @@
 
 <script lang="ts">
+
+	import ContentLayout from '$lib/components/shared/content-layout.svelte';
 </script>
 
-Home page
+<ContentLayout variant="heading" title="Home Page"/>

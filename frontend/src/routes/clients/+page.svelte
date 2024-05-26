@@ -3,6 +3,7 @@
 	import ClientTable from '$lib/components/clients/client-table.svelte';
 	import AddClientForm from '$lib/components/clients/add-client-form.svelte';
 	import { handleAsyncOperation } from '$lib/utils';
+	import ContentLayout from '$lib/components/shared/content-layout.svelte';
 
 	let clients = getClients();
 	let localClients = $state([]);
@@ -24,14 +25,7 @@
 	}
 </script>
 
-<div class="w-full">
-	<div class="bg-gray-100 w-full flex">
-		<div class="p-6">
-			<h1 class="text-4xl font-bold text-left">Clients</h1>
-		</div>
-	</div>
-
+<ContentLayout variant="heading" title="Clients">
 	<AddClientForm {addNewClient} />
-
 	<ClientTable clients={localClients} {saveClient} />
-</div>
+</ContentLayout>

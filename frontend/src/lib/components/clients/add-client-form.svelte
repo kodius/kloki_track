@@ -15,7 +15,7 @@
 </script>
 
 <div class="w-full justify-start flex">
-    <div class="w-full xl:w-1/3 flex pt-6 pb-6 justify-start">
+    <div class="w-full xl:w-1/3 flex pb-6 justify-start">
         <div class="flex-grow">
             <input
                 type="text"
