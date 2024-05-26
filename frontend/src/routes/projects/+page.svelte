@@ -1,22 +1,18 @@
 <script lang="ts">
+	import ContentLayout from '$lib/components/shared/content-layout.svelte';
+	import ProjectInfoCard from '$lib/components/projects/project-info-card.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
-	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { getClients } from '$lib/stores/clientsStore.svelte';
-	import ContentLayout from '$lib/components/shared/content-layout.svelte';
 
 	let clients = getClients();
 </script>
 
 <ContentLayout variant="heading" title="Projects">
-	<Card.Root class="w-[350px]">
-		<Card.Header>
-			<Card.Title>Create project</Card.Title>
-			<Card.Description>Create your new project</Card.Description>
-		</Card.Header>
-		<Card.Content>
+	<ProjectInfoCard title="Create Project" description="Create your new project">
+		{#snippet formContent()}
 			<form>
 				<div class="grid w-full items-center gap-4">
 					<div class="flex flex-col space-y-1.5">
@@ -40,10 +36,10 @@
 					</div>
 				</div>
 			</form>
-		</Card.Content>
-		<Card.Footer class="flex justify-between">
+		{/snippet}
+		{#snippet footerContent()}
 			<Button variant="outline">Cancel</Button>
 			<Button>Save</Button>
-		</Card.Footer>
-	</Card.Root>
+		{/snippet}
+	</ProjectInfoCard>
 </ContentLayout>
