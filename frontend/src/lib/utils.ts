@@ -3,6 +3,22 @@ import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 import _ from 'lodash';
+import { toast } from '@zerodevx/svelte-toast';
+
+export async function handleAsyncOperation(operationFunc, errorMessage) {
+    try {
+        await operationFunc(); // Execute the passed function
+    } catch (error) {
+        toast.push(errorMessage, {
+            theme: {
+                '--toastColor': 'mintcream',
+                '--toastBackground': '#EF4444',
+                '--toastBarHeight': 0
+            }
+        });
+        throw error; // Rethrow the error for further handling if necessary
+    }
+}
 
 export function updateItemInList<T extends { id: string | number }>(
   list: T[],
