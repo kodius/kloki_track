@@ -5,19 +5,29 @@
 	const { client, saveClient } = $props();
 
 	function toggleEdit() {
-		if (client.isEditing) {
-			client.name = client.originalName;
-		} else {
-			client.originalName = client.name;
-		}
+		client.name = client.isEditing ? client.originalName : client.name;
+		client.originalName = !client.isEditing ? client.name : client.originalName;
 		client.isEditing = !client.isEditing;
+	}
+
+	function handleKeydown(event) {
+		if (event.key === 'Enter' && client.isEditing) {
+			saveClient(client);
+		} else if (event.key === 'Escape' && client.isEditing) {
+			toggleEdit();
+		}
 	}
 </script>
 
 <tr>
 	<td class="border px-4 py-2">
 		{#if client.isEditing}
-			<Input type="text" placeholder="Name of your client" bind:value={client.name} />
+			<Input
+				type="text"
+				placeholder="Name of your client"
+				bind:value={client.name}
+				on:keydown={handleKeydown}
+			/>
 		{:else}
 			{client.name}
 		{/if}
@@ -25,9 +35,9 @@
 	<td class="px-4 py-2 min-w-[200px]">
 		{#if client.isEditing}
 			<Button on:click={() => saveClient(client)}>Save</Button>
-			<Button on:click={() => toggleEdit()}>Cancel</Button>
+			<Button on:click={toggleEdit}>Cancel</Button>
 		{:else}
-			<Button on:click={() => toggleEdit()}>Edit</Button>
+			<Button on:click={toggleEdit}>Edit</Button>
 		{/if}
 	</td>
 </tr>
