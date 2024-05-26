@@ -2,8 +2,8 @@
 	const { addNewClient } = $props();
 	let newClientName = $state('');
 
-	function handleSubmit() {
-		addNewClient(newClientName);
+	async function handleSubmit() {
+		await addNewClient(newClientName);
 		newClientName = '';
 	}
 </script>

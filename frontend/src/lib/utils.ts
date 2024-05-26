@@ -7,7 +7,7 @@ import { toast } from '@zerodevx/svelte-toast';
 
 export async function handleAsyncOperation(operationFunc, errorMessage) {
     try {
-        await operationFunc(); // Execute the passed function
+        await operationFunc();
     } catch (error) {
         toast.push(errorMessage, {
             theme: {
@@ -16,7 +16,7 @@ export async function handleAsyncOperation(operationFunc, errorMessage) {
                 '--toastBarHeight': 0
             }
         });
-        throw error; // Rethrow the error for further handling if necessary
+        throw error;
     }
 }
 
