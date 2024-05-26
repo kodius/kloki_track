@@ -19,3 +19,13 @@ mutation createProject($clientId: ID!, $name: String!, $public: Boolean) {
 		public
 	}
 }
+
+mutation createClient($name: String!) {
+	createClient(name: $name) {
+		id
+		name
+    archived
+	}
+}
+
+

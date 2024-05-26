@@ -2,22 +2,37 @@ import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
-import pkg from 'lodash';
-const { findIndex } = pkg;
+import _ from 'lodash';
 
-export function updateItemInList<T extends { id: string | number }>(list: T[], updatedItem: T): void {
-    if (updatedItem.id == null) {
-        throw new Error("Updated item must have a valid 'id' field.");
-    }
+export function updateItemInList<T extends { id: string | number }>(
+  list: T[],
+  updatedItem: T
+): void {
+  if (updatedItem.id == null) {
+    throw new Error("Updated item must have a valid 'id' field.");
+  }
 
-    const index = list.findIndex((item) => item.id === updatedItem.id);
-    if (index !== -1) {
-        list[index] = updatedItem;
-    }
+  const index = list.findIndex((item) => item.id === updatedItem.id);
+  if (index !== -1) {
+    list[index] = updatedItem;
+  }
+}
+
+export function addItemToList<T extends { id: string | number }>(list: T[], newItem: T): void {
+  if (newItem.id == null) {
+    throw new Error("New item must have a valid 'id' field.");
+  }
+
+  const exists = _.some(list, { id: newItem.id });
+  if (!exists) {
+    list.push(newItem);
+  } else {
+    throw new Error("Item with the same 'id' already exists in the list.");
+  }
 }
 
 export function replaceArrayContent<T>(array: T[], newContent?: T[] | null): void {
-    array.splice(0, array.length, ...(newContent ?? []));
+  array.splice(0, array.length, ...(newContent ?? []));
 }
 
 export function cn(...inputs: ClassValue[]) {
