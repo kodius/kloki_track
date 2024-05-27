@@ -5,12 +5,40 @@
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
-	import { getClients } from '$lib/stores/clientsStore.svelte';
+	import type { Project} from '$lib/gql/generated/graphql';
 
-	let clients = getClients();
+	import { getProjects, updateProject, createProject } from '$lib/stores/projectsStore.svelte';
+	import { handleAsyncOperation } from '$lib/utils';
+
+	let projects = getProjects();
+	let localProjects = $state<Project[]>([]);
+
+	$effect(() => {
+		localProjects = projects.map((client) => ({ ...client, isEditing: false }));
+	});
+
+	// async function addNewClient(newClientName) {
+	// 	await handleAsyncOperation(async () => {
+	// 		await createClient(newClientName.trim());
+	// 	}, 'Error adding client.');
+	// }
+	//
+	// async function saveClient(client) {
+	// 	await handleAsyncOperation(async () => {
+	// 		await updateClient(client);
+	// 	}, 'Error updating client.');
+	// }
 </script>
 
 <ContentLayout variant="heading" title="Projects">
+
+  {#each localProjects as project}
+      {project.id}
+      <br/>
+      {project.name}
+      <br/>
+      <hr>
+  {/each}
 	<ProjectInfoCard title="Create Project" className="w-1/3">
 		{#snippet formContent()}
 			<form>
