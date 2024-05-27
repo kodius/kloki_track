@@ -1,9 +1,9 @@
 <script>
 	import BaseCard from '$lib/components/shared/base-card.svelte'
-	let { title, description, formContent, footerContent } = $props();
+	let { title, description, formContent, footerContent, className} = $props();
 </script>
 
-<BaseCard>
+<BaseCard {className}>
 	<div class="mb-4">
 		<h2 class="text-xl font-semibold text-gray-900">{title}</h2>
 		<p class="text-gray-600">{description}</p>

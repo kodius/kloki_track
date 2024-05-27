@@ -11,7 +11,7 @@
 </script>
 
 <ContentLayout variant="heading" title="Projects">
-	<ProjectInfoCard title="Create Project" description="Create your new project">
+	<ProjectInfoCard title="Create Project" description="Create your new project" className="w-1/3">
 		{#snippet formContent()}
 			<form>
 				<div class="grid w-full items-center gap-4">
