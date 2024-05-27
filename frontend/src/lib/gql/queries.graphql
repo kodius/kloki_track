@@ -12,14 +12,6 @@ mutation updateClient($id: ID!, $name: String) {
 	}
 }
 
-mutation createProject($clientId: ID!, $name: String!, $public: Boolean) {
-	createProject(clientId: $clientId, name: $name, public: $public) {
-		id
-		name
-		public
-	}
-}
-
 mutation createClient($name: String!) {
 	createClient(name: $name) {
 		id
@@ -28,4 +20,29 @@ mutation createClient($name: String!) {
 	}
 }
 
+query getProjects {
+	projects {
+		id
+		name
+    archived
+    public
+	}
+}
 
+mutation updateProject($id: ID!, $name: String, $archived: Boolean, $public: Boolean) {
+	updateProject(id: $id, name: $name, archived: $archived, public: $public) {
+		id
+		name
+    public
+    archived
+	}
+}
+
+
+mutation createProject($clientId: ID!, $name: String!, $public: Boolean) {
+	createProject(clientId: $clientId, name: $name, public: $public) {
+		id
+		name
+		public
+	}
+}
