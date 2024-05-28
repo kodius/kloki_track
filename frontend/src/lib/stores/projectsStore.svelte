@@ -1,8 +1,7 @@
 <script context="module" lang="ts">
 	import { client as graphqlClient } from '$lib/graphql-client';
 	import { GetProjectsDocument, CreateProjectDocument, UpdateProjectDocument } from '$lib/gql/generated/graphql';
-	import type { Project, CreateProjectMutation, UpdateProjectMutation, GetProjectsQuery } from '$lib/gql/generated/graphql';
-	import { updateItemInList, replaceArrayContent, addItemToList } from '$lib/utils';
+	import type { Project, CreateProjectMutation, UpdateProjectMutation, GetProjectsQuery } from '$lib/gql/generated/graphql'; import { updateItemInList, replaceArrayContent, addItemToList } from '$lib/utils';
 
 	let projects = $state<Project[]>([]);
 

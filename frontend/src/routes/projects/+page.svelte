@@ -5,58 +5,100 @@
 	import * as Select from '$lib/components/ui/select/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
-	import type { Project} from '$lib/gql/generated/graphql';
+	import type { Project } from '$lib/gql/generated/graphql';
 
 	import { getProjects, updateProject, createProject } from '$lib/stores/projectsStore.svelte';
+	import { getClients } from '$lib/stores/clientsStore.svelte';
 	import { handleAsyncOperation } from '$lib/utils';
 
 	let projects = getProjects();
+	let clients = getClients();
 	let localProjects = $state<Project[]>([]);
 
 	$effect(() => {
 		localProjects = projects.map((client) => ({ ...client, isEditing: false }));
 	});
+	let projectName = $state('');
+	let selectedClientId = $state(null);
 
-	// async function addNewClient(newClientName) {
-	// 	await handleAsyncOperation(async () => {
-	// 		await createClient(newClientName.trim());
-	// 	}, 'Error adding client.');
-	// }
-	//
-	// async function saveClient(client) {
-	// 	await handleAsyncOperation(async () => {
-	// 		await updateClient(client);
-	// 	}, 'Error updating client.');
-	// }
+	async function handleSubmit() {
+		if (!projectName || !selectedClientId) {
+			alert('Please fill in all required fields.');
+			return;
+		}
+
+		await handleAsyncOperation(async () => {
+			await createProject(projectName, selectedClientId, true);
+		}, 'Error adding project.');
+		resetForm();
+	}
+
+	function setSelectedClientId(value) {
+		selectedClientId = value.value;
+	}
+
+	function resetForm() {
+		projectName = '';
+		selectedClientId = null;
+	}
 </script>
 
 <ContentLayout variant="heading" title="Projects">
-
-  {#each localProjects as project}
-      {project.id}
-      <br/>
-      {project.name}
-      <br/>
-      <hr>
-  {/each}
-	<ProjectInfoCard title="Create Project" className="w-1/3">
+	<div class="overflow-x-auto">
+		<table class="min-w-full table-auto">
+			<thead class="bg-gray-50">
+				<tr>
+					<th
+						scope="col"
+						class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+					>
+						Name
+					</th>
+					<th
+						scope="col"
+						class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+					>
+						Client Name
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each localProjects as project}
+					<tr class="bg-white border-b">
+						<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+							{project.name}
+						</td>
+						<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+							>{project.client.name}
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	</div>
+	<ProjectInfoCard title="Create Project" className="w-1/3 mt-10 border">
 		{#snippet formContent()}
-			<form>
+			<form on:submit|preventDefault={handleSubmit}>
 				<div class="grid w-full items-center gap-4">
 					<div class="flex flex-col space-y-1.5">
 						<Label for="name">Name</Label>
-						<Input id="name" placeholder="Name of your project" autoComplete="off" />
+						<Input
+							id="name"
+							bind:value={projectName}
+							placeholder="Name of your project"
+							autoComplete="off"
+						/>
 					</div>
 					<div class="flex flex-col space-y-1.5">
-						<Label for="framework">Client</Label>
-						<Select.Root>
+						<Label for="client">Client</Label>
+						<Select.Root selected={selectedClientId} onSelectedChange={setSelectedClientId}>
 							<Select.Trigger id="client">
 								<Select.Value placeholder="Select" />
 							</Select.Trigger>
 							<Select.Content>
 								{#each clients as client}
-									<Select.Item value={client.id} label={client.name ?? 'Unnamed Client'}>
-										{client.name}
+									<Select.Item value={client.id}>
+										{client.name || 'Unnamed Client'}
 									</Select.Item>
 								{/each}
 							</Select.Content>
@@ -66,8 +108,8 @@
 			</form>
 		{/snippet}
 		{#snippet footerContent()}
-			<Button variant="outline">Cancel</Button>
-			<Button>Save</Button>
+			<Button variant="outline" on:click={resetForm}>Cancel</Button>
+			<Button on:click={handleSubmit}>Save</Button>
 		{/snippet}
 	</ProjectInfoCard>
 </ContentLayout>
