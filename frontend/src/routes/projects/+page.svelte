@@ -95,7 +95,7 @@
 					</div>
 					<div class="flex flex-col space-y-1.5">
 						<Label for="client">Client</Label>
-            <ComboBox items={clientsList} onSelectedChange={setSelectedClientId}/>
+            <ComboBox items={clientsList} onSelectedChange={setSelectedClientId} selectedValue={selectedClientId}/>
 					</div>
 				</div>
 			</form>

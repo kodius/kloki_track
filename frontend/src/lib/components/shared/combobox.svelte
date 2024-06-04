@@ -7,7 +7,7 @@
 	import { cn } from '$lib/utils.js';
 	import { tick } from 'svelte';
 
-	const { items, onSelectedChange } = $props();
+	const { items, onSelectedChange, selectedValue } = $props();
 
 	const selectedValueFunction = () => {
 		return items.find((f) => f.value === value)?.label ?? 'Select an item...';
@@ -20,7 +20,7 @@
 
 	let open = $state(false);
 	let value = $state('');
-	let selectedValue = $derived(selectedValueFunction());
+	let selectedValueLabel = $derived(selectedValueFunction());
 
 	// We want to refocus the trigger button when the user selects
 	// an item from the list so users can continue navigating the
@@ -31,6 +31,10 @@
 			document.getElementById(triggerId)?.focus();
 		});
 	}
+  $effect(() => {
+    value = selectedValue;
+	});
+
 </script>
 
 <Popover.Root bind:open let:ids>
@@ -42,7 +46,7 @@
 			aria-expanded={open}
 			class="w-[400px] justify-between"
 		>
-			{selectedValue}
+			{selectedValueLabel}
 			<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
 		</Button>
 	</Popover.Trigger>
