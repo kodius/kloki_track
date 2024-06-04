@@ -7,7 +7,7 @@
 	import { cn } from '$lib/utils.js';
 	import { tick } from 'svelte';
 
-	const { items } = $props();
+	const { items, onSelectedChange } = $props();
 
 	const selectedValueFunction = () => {
 		return items.find((f) => f.value === value)?.label ?? 'Select an item...';
@@ -65,6 +65,7 @@
 						value={item.value}
 						onSelect={(currentValue) => {
 							value = currentValue;
+							onSelectedChange(currentValue);
 							closeAndFocusTrigger(ids.trigger);
 						}}
 					>

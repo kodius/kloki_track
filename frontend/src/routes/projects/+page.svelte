@@ -6,14 +6,18 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import type { Project } from '$lib/gql/generated/graphql';
+	import ComboBox from '$lib/components/shared/combobox.svelte';
 
 	import { getProjects, updateProject, createProject } from '$lib/stores/projectsStore.svelte';
 	import { getClients } from '$lib/stores/clientsStore.svelte';
 	import { handleAsyncOperation } from '$lib/utils';
+  import { mapToValueLabel} from '$lib/utils.ts'
 
 	let projects = getProjects();
 	let clients = getClients();
 	let localProjects = $state<Project[]>([]);
+
+	const clientsList = $derived(mapToValueLabel(clients))
 
 	$effect(() => {
 		localProjects = projects.map((client) => ({ ...client, isEditing: false }));
@@ -34,7 +38,7 @@
 	}
 
 	function setSelectedClientId(value) {
-		selectedClientId = value.value;
+		selectedClientId = value;
 	}
 
 	function resetForm() {
@@ -91,18 +95,7 @@
 					</div>
 					<div class="flex flex-col space-y-1.5">
 						<Label for="client">Client</Label>
-						<Select.Root selected={selectedClientId} onSelectedChange={setSelectedClientId}>
-							<Select.Trigger id="client">
-								<Select.Value placeholder="Select" />
-							</Select.Trigger>
-							<Select.Content>
-								{#each clients as client}
-									<Select.Item value={client.id}>
-										{client.name || 'Unnamed Client'}
-									</Select.Item>
-								{/each}
-							</Select.Content>
-						</Select.Root>
+            <ComboBox items={clientsList} onSelectedChange={setSelectedClientId}/>
 					</div>
 				</div>
 			</form>
