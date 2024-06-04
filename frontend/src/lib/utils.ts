@@ -5,6 +5,13 @@ import type { TransitionConfig } from 'svelte/transition';
 import _ from 'lodash';
 import { toast } from '@zerodevx/svelte-toast';
 
+export function mapToValueLabel(array) {
+    return array.map(item => ({
+        value: `${item.id}`,
+        label: item.name
+    }));
+}
+
 export async function handleAsyncOperation(operationFunc, errorMessage) {
     try {
         await operationFunc();
