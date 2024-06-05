@@ -1,17 +1,22 @@
-<script>
-	import BaseCard from '$lib/components/shared/base-card.svelte'
-	let { title, description, formContent, footerContent, className} = $props();
+<script lang="ts">
+	import BaseCard from '$lib/components/shared/base-card.svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	let { title, description, formContent, footerContent, className } = $props();
 </script>
 
 <BaseCard {className}>
-	<div class="mb-4">
-		<h2 class="text-xl font-semibold text-gray-900">{title}</h2>
-		<p class="text-gray-600">{description}</p>
-	</div>
-	<div class="mb-4">
+	<Dialog.Header>
+		<Dialog.Title>{title}</Dialog.Title>
+		<Dialog.Description>{description}</Dialog.Description>
+	</Dialog.Header>
+	<div class="mt-6 mb-6">
 		{@render formContent()}
 	</div>
-	<div class="mt-4 pt-4 border-t">
+	<Dialog.Footer>
+		<Dialog.Close>
+			<Button variant="outline">Cancel</Button>
+		</Dialog.Close>
 		{@render footerContent()}
-	</div>
+	</Dialog.Footer>
 </BaseCard>

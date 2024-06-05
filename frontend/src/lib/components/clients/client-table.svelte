@@ -7,7 +7,7 @@
 
 <Table.Root class="w-full">
 	<Table.Caption>A list of your clients.</Table.Caption>
-	<Table.Header>
+	<Table.Header class="bg-gray-50">
 		<Table.Row>
 			<Table.Head class="px-4 py-2 text-left">Name</Table.Head>
 			<Table.Head class="px-4 py-2 text-left w-1/5">Actions</Table.Head>

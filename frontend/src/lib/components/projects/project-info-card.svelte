@@ -15,7 +15,7 @@
 	let projectName = $state('');
 	let selectedClientId = $state(null);
 
-	let { title, description = '', className = '' } = $props();
+	let { title, closeDialog, description = '', className = '' } = $props();
 
 	async function handleSubmit() {
 		if (!projectName || !selectedClientId) {
@@ -25,17 +25,12 @@
 
 		await handleAsyncOperation(async () => {
 			await createProject(projectName, selectedClientId, true);
+      closeDialog?.()
 		}, 'Error adding project.');
-		resetForm();
 	}
 
 	function setSelectedClientId(value) {
 		selectedClientId = value;
-	}
-
-	function resetForm() {
-		projectName = '';
-		selectedClientId = null;
 	}
 </script>
 
@@ -65,7 +60,6 @@
 		</form>
 	{/snippet}
 	{#snippet footerContent()}
-		<Button variant="outline" on:click={resetForm}>Cancel</Button>
-		<Button on:click={handleSubmit}>Save</Button>
+		<Button on:click={handleSubmit}>Save Changes</Button>
 	{/snippet}
 </InfoCard>

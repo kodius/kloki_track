@@ -11,27 +11,24 @@
 
 	let projects = getProjects();
 	let localProjects = $state<Project[]>([]);
+  let projectDialogOpen = $state(false);
 
 	$effect(() => {
 		localProjects = projects.map((client) => ({ ...client, isEditing: false }));
 	});
+
+  function closeDialog() {
+    projectDialogOpen = false
+  }
 </script>
 
 <ContentLayout variant="heading" title="Projects">
 	{#snippet actionButtons()}
-		<Dialog.Root>
+		<Dialog.Root bind:open={projectDialogOpen}>
 			<Dialog.Trigger class={buttonVariants({ variant: 'default' })}>Add New Project</Dialog.Trigger
 			>
 			<Dialog.Content class="sm:max-w-[425px]">
-				<Dialog.Header>
-					<Dialog.Title>Add Project</Dialog.Title>
-					<Dialog.Description>Add new project.</Dialog.Description>
-				</Dialog.Header>
-				<ProjectInfoCard title="Create Project" description="Add new project" />
-				<Dialog.Footer>
-					<Button type="submit" variant="outline">Cancel</Button>
-					<Button type="submit">Save changes</Button>
-				</Dialog.Footer>
+				<ProjectInfoCard title="Create Project" description="Add new project" {closeDialog} />
 			</Dialog.Content>
 		</Dialog.Root>
 	{/snippet}

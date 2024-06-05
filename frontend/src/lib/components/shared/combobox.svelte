@@ -44,13 +44,13 @@
 			variant="outline"
 			role="combobox"
 			aria-expanded={open}
-			class="w-[400px] justify-between"
+			class="w-[375px] justify-between"
 		>
 			{selectedValueLabel}
 			<ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
 		</Button>
 	</Popover.Trigger>
-	<Popover.Content class="w-[400px] p-0">
+	<Popover.Content class="w-[375px] p-0">
 		<Command.Root
 			filter={(value, search) => {
 				const extendValue = findLabelByValue(items, value);
