@@ -8,10 +8,7 @@
 
 <svelte:head>
 	<title>Kloki Time Tracker</title>
-	<meta
-		name="description"
-		content="Streamline your T&M tracking Kloki Tracker"
-	/>
+	<meta name="description" content="Streamline your T&M tracking Kloki Tracker" />
 	<link rel="icon" href="/favicon-32x32.png" />
 	<meta
 		name="viewport"
@@ -20,9 +17,18 @@
 </svelte:head>
 
 <div class="flex min-h-screen">
-	<SvelteToast />
+  <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
 	<Navigation />
 	<div class="flex-1 p-5 flex flex-col items-center">
 		<slot />
 	</div>
 </div>
+
+<style>
+	:root {
+		--toastContainerTop: auto;
+		--toastContainerRight: auto;
+		--toastContainerBottom: 0rem;
+		--toastContainerLeft: 0;
+	}
+</style>

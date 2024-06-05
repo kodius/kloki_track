@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 import _ from 'lodash';
-import { toast } from '@zerodevx/svelte-toast';
+import { success, eroror } from '$lib/toast-theme'
 
 export function mapToValueLabel(array) {
 	return array.map((item) => ({
@@ -16,13 +16,7 @@ export async function handleAsyncOperation(operationFunc, errorMessage) {
 	try {
 		await operationFunc();
 	} catch (error) {
-		toast.push(errorMessage, {
-			theme: {
-				'--toastColor': 'mintcream',
-				'--toastBackground': '#EF4444',
-				'--toastBarHeight': 0
-			}
-		});
+    error(errorMessage)
 		throw error;
 	}
 }
@@ -40,13 +34,7 @@ export function updateItemInList<T extends { id: string | number }>(
 		list[index] = updatedItem;
 	}
 
-	toast.push('Successfuly updated', {
-		theme: {
-			'--toastColor': 'mintcream',
-			'--toastBackground': 'green',
-			'--toastBarHeight': 0
-		}
-	});
+  success('Successfuly updated')
 }
 
 export function addItemToList<T extends { id: string | number }>(list: T[], newItem: T): void {
@@ -61,13 +49,7 @@ export function addItemToList<T extends { id: string | number }>(list: T[], newI
 		throw new Error("Item with the same 'id' already exists in the list.");
 	}
 
-	toast.push('Successfuly added', {
-		theme: {
-			'--toastColor': 'mintcream',
-			'--toastBackground': 'green',
-			'--toastBarHeight': 0
-		}
-	});
+  success('Successfuly added')
 }
 
 export function replaceArrayContent<T>(array: T[], newContent?: T[] | null): void {
