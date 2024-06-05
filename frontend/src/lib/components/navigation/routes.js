@@ -1,5 +1,5 @@
 export const routes = {
-    home: '/',
+    time_tracker: '/',
     projects: '/projects',
     clients: '/clients'
 };

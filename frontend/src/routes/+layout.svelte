@@ -7,7 +7,7 @@
 </script>
 
 <svelte:head>
-	<title>Kloki Tracker</title>
+	<title>Kloki Time Tracker</title>
 	<meta
 		name="description"
 		content="Streamline your T&M tracking Kloki Tracker"

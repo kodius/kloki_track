@@ -3,7 +3,7 @@
 	import { routes } from './routes.js';
 
 	const links = [
-		{ href: routes.home, text: 'Home' },
+		{ href: routes.time_tracker, text: 'Time Tracker' },
 		{ href: routes.projects, text: 'Projects' },
 		{ href: routes.clients, text: 'Clients' }
 	];
