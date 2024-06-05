@@ -7,10 +7,10 @@
 	import { cn } from '$lib/utils.js';
 	import { tick } from 'svelte';
 
-	const { items, onSelectedChange, selectedValue } = $props();
+	const { items, onSelectedChange, selectedValue, name } = $props();
 
 	const selectedValueFunction = () => {
-		return items.find((f) => f.value === value)?.label ?? 'Select an item...';
+		return items.find((f) => f.value === value)?.label ?? ('Select ' + (name || 'item') + '...');
 	};
 
 	function findLabelByValue(data, value) {
@@ -60,8 +60,8 @@
 				return 0;
 			}}
 		>
-			<Command.Input placeholder="Search item..." />
-			<Command.Empty>No item found.</Command.Empty>
+			<Command.Input placeholder={name ? `Search ${name}...` : 'Search item...'} />
+			<Command.Empty>No {name || 'item'} found.</Command.Empty>
 			<Command.Group>
 				{#each items as item}
 					<Command.Item
