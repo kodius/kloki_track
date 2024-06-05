@@ -1,19 +1,21 @@
 <script>
-	import ClientRow from '$lib/components/clients/client-row.svelte';
+	import * as Table from '$lib/components/ui/table';
+  import ClientRow from '$lib/components/clients/client-row.svelte';
 
 	const { clients, saveClient } = $props();
+
 </script>
 
-<table class="table-auto w-full">
-	<thead>
-		<tr>
-			<th class="px-4 py-2 text-left">Name</th>
-			<th class="px-4 py-2 text-left w-1/5">Actions</th>
-		</tr>
-	</thead>
-	<tbody>
-		{#each clients as client}
-			<ClientRow {client} {saveClient} />
-		{/each}
-	</tbody>
-</table>
+<Table.Root class="w-full">
+  <Table.Header>
+    <Table.Row>
+      <Table.Head class="px-4 py-2 text-left">Name</Table.Head>
+      <Table.Head class="px-4 py-2 text-left w-1/5">Actions</Table.Head>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    {#each clients as client}
+      <ClientRow {client} {saveClient} />
+    {/each}
+  </Table.Body>
+</Table.Root>

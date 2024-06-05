@@ -12,8 +12,7 @@
 		name="description"
 		content="Streamline your T&M tracking Kloki Tracker"
 	/>
-	<link rel="icon" href="/favicon-32x32.png" media="(prefers-color-scheme: light)" />
-	<link rel="icon" href="/favicon-32x32.png" media="(prefers-color-scheme: dark)" />
+	<link rel="icon" href="/favicon-32x32.png" />
 	<meta
 		name="viewport"
 		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"

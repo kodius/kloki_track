@@ -6,17 +6,18 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import type { Project } from '$lib/gql/generated/graphql';
 	import ComboBox from '$lib/components/shared/combobox.svelte';
+	import * as Table from '$lib/components/ui/table';
 
 	import { getProjects, updateProject, createProject } from '$lib/stores/projectsStore.svelte';
 	import { getClients } from '$lib/stores/clientsStore.svelte';
 	import { handleAsyncOperation } from '$lib/utils';
-  import { mapToValueLabel} from '$lib/utils.ts'
+	import { mapToValueLabel } from '$lib/utils.ts';
 
 	let projects = getProjects();
 	let clients = getClients();
 	let localProjects = $state<Project[]>([]);
 
-	const clientsList = $derived(mapToValueLabel(clients))
+	const clientsList = $derived(mapToValueLabel(clients));
 
 	$effect(() => {
 		localProjects = projects.map((client) => ({ ...client, isEditing: false }));
@@ -48,36 +49,34 @@
 
 <ContentLayout variant="heading" title="Projects">
 	<div class="overflow-x-auto">
-		<table class="min-w-full table-auto">
-			<thead class="bg-gray-50">
-				<tr>
-					<th
-						scope="col"
+		<Table.Root class="min-w-full">
+			<Table.Header class="bg-gray-50">
+				<Table.Row>
+					<Table.Head
 						class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 					>
 						Name
-					</th>
-					<th
-						scope="col"
+					</Table.Head>
+					<Table.Head
 						class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
 					>
 						Client Name
-					</th>
-				</tr>
-			</thead>
-			<tbody>
+					</Table.Head>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
 				{#each localProjects as project}
-					<tr class="bg-white border-b">
-						<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+					<Table.Row class="bg-white border-b">
+						<Table.Cell class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
 							{project.name}
-						</td>
-						<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-							>{project.client.name}
-						</td>
-					</tr>
+						</Table.Cell>
+						<Table.Cell class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+							{project.client.name}
+						</Table.Cell>
+					</Table.Row>
 				{/each}
-			</tbody>
-		</table>
+			</Table.Body>
+		</Table.Root>
 	</div>
 	<ProjectInfoCard title="Create Project" className="mt-10 border">
 		{#snippet formContent()}
@@ -94,7 +93,12 @@
 					</div>
 					<div class="flex flex-col space-y-1.5">
 						<Label for="client">Client</Label>
-            <ComboBox items={clientsList} onSelectedChange={setSelectedClientId} selectedValue={selectedClientId} name="client" />
+						<ComboBox
+							items={clientsList}
+							onSelectedChange={setSelectedClientId}
+							selectedValue={selectedClientId}
+							name="client"
+						/>
 					</div>
 				</div>
 			</form>
