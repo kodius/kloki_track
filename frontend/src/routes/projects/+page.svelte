@@ -80,7 +80,7 @@
 			</tbody>
 		</table>
 	</div>
-	<ProjectInfoCard title="Create Project" className="w-1/3 mt-10 border">
+	<ProjectInfoCard title="Create Project" className="mt-10 border">
 		{#snippet formContent()}
 			<form on:submit|preventDefault={handleSubmit}>
 				<div class="grid w-full items-center gap-4">
@@ -89,7 +89,7 @@
 						<Input
 							id="name"
 							bind:value={projectName}
-							placeholder="Name of your project"
+							placeholder="Enter project name"
 							autoComplete="off"
 						/>
 					</div>
