@@ -5,7 +5,7 @@
 <div class="w-full">
 	<div class={`content-layout ${variant}`}>
 		<div class="bg-gray-100 w-full flex">
-			<div class="p-6">
+			<div class="pt-6 pb-6">
 				<h1 class="text-4xl font-bold text-left">{title}</h1>
 			</div>
 		</div>

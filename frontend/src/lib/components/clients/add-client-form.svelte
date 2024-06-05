@@ -1,38 +1,35 @@
-<script>
-    const { addNewClient } = $props();
-    let newClientName = $state("");
+<script lang="ts">
+	import { Button } from '$lib/components/ui/button/index.js';
+	import { Input } from '$lib/components/ui/input/index.js';
+	const { addNewClient } = $props();
+	let newClientName = $state('');
 
-    async function handleSubmit() {
-        await addNewClient(newClientName);
-        newClientName = '';
-    }
+	async function handleSubmit() {
+		await addNewClient(newClientName);
+		newClientName = '';
+	}
 
-    function handleKeydown(event) {
-        if (event.keyCode === 13 && newClientName.trim() !== '') {
-            handleSubmit();
-        }
-    }
+	function handleKeydown(event) {
+		if (event.keyCode === 13 && newClientName.trim() !== '') {
+			handleSubmit();
+		}
+	}
 </script>
 
 <div class="w-full justify-start flex">
-    <div class="w-full xl:w-1/3 flex pb-6 justify-start">
-        <div class="flex-grow">
-            <input
-                type="text"
-                placeholder="Enter new client name"
-                bind:value={newClientName}
-                on:keydown={handleKeydown}
-                class="w-full p-2 border rounded"
-            />
-        </div>
-        <div class="ml-4">
-            <button
-                on:click={handleSubmit}
-                class="ml-4 p-2 bg-blue-500 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={newClientName.trim() === ''}
-            >
-                Add
-            </button>
-        </div>
-    </div>
+	<div class="w-full xl:w-1/3 flex pb-6 justify-start">
+		<div class="flex-grow">
+			<Input
+				id="name"
+				type="text"
+				placeholder="Enter new client name"
+				bind:value={newClientName}
+				on:keydown={handleKeydown}
+				autoComplete="off"
+			/>
+		</div>
+		<div class="ml-4">
+			<Button on:click={handleSubmit} disabled={newClientName.trim() === ''}>Add</Button>
+		</div>
+	</div>
 </div>

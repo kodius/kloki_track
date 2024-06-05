@@ -2,7 +2,6 @@
 	import ContentLayout from '$lib/components/shared/content-layout.svelte';
 	import ProjectInfoCard from '$lib/components/projects/project-info-card.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
-	import * as Select from '$lib/components/ui/select/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import type { Project } from '$lib/gql/generated/graphql';
