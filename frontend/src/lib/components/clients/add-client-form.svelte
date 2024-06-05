@@ -19,7 +19,7 @@
         <div class="flex-grow">
             <input
                 type="text"
-                placeholder="Add new client"
+                placeholder="Enter new client name"
                 bind:value={newClientName}
                 on:keydown={handleKeydown}
                 class="w-full p-2 border rounded"
