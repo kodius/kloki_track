@@ -1,84 +1,41 @@
 <script lang="ts">
 	import ContentLayout from '$lib/components/shared/content-layout.svelte';
 	import ProjectInfoCard from '$lib/components/projects/project-info-card.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
 	import type { Project } from '$lib/gql/generated/graphql';
-	import ComboBox from '$lib/components/shared/combobox.svelte';
 	import ProjectsTable from '$lib/components/projects/projects-table.svelte';
 
-	import { getProjects, updateProject, createProject } from '$lib/stores/projectsStore.svelte';
-	import { getClients } from '$lib/stores/clientsStore.svelte';
-	import { handleAsyncOperation } from '$lib/utils';
-	import { mapToValueLabel } from '$lib/utils.ts';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
+
+	import { getProjects } from '$lib/stores/projectsStore.svelte';
 
 	let projects = getProjects();
-	let clients = getClients();
 	let localProjects = $state<Project[]>([]);
-
-	const clientsList = $derived(mapToValueLabel(clients));
 
 	$effect(() => {
 		localProjects = projects.map((client) => ({ ...client, isEditing: false }));
 	});
-	let projectName = $state('');
-	let selectedClientId = $state(null);
-
-	async function handleSubmit() {
-		if (!projectName || !selectedClientId) {
-			alert('Please fill in all required fields.');
-			return;
-		}
-
-		await handleAsyncOperation(async () => {
-			await createProject(projectName, selectedClientId, true);
-		}, 'Error adding project.');
-		resetForm();
-	}
-
-	function setSelectedClientId(value) {
-		selectedClientId = value;
-	}
-
-	function resetForm() {
-		projectName = '';
-		selectedClientId = null;
-	}
 </script>
 
 <ContentLayout variant="heading" title="Projects">
+	{#snippet actionButtons()}
+		<Dialog.Root>
+			<Dialog.Trigger class={buttonVariants({ variant: 'default' })}>Add New Project</Dialog.Trigger
+			>
+			<Dialog.Content class="sm:max-w-[425px]">
+				<Dialog.Header>
+					<Dialog.Title>Add Project</Dialog.Title>
+					<Dialog.Description>Add new project.</Dialog.Description>
+				</Dialog.Header>
+				<ProjectInfoCard title="Create Project" description="Add new project" />
+				<Dialog.Footer>
+					<Button type="submit" variant="outline">Cancel</Button>
+					<Button type="submit">Save changes</Button>
+				</Dialog.Footer>
+			</Dialog.Content>
+		</Dialog.Root>
+	{/snippet}
 	<div class="overflow-x-auto">
 		<ProjectsTable {localProjects} />
 	</div>
-	<ProjectInfoCard title="Create Project" className="mt-10 border">
-		{#snippet formContent()}
-			<form on:submit|preventDefault={handleSubmit}>
-				<div class="grid w-full items-center gap-4">
-					<div class="flex flex-col space-y-1.5">
-						<Label for="name">Name</Label>
-						<Input
-							id="name"
-							bind:value={projectName}
-							placeholder="Enter project name"
-							autoComplete="off"
-						/>
-					</div>
-					<div class="flex flex-col space-y-1.5">
-						<Label for="client">Client</Label>
-						<ComboBox
-							items={clientsList}
-							onSelectedChange={setSelectedClientId}
-							selectedValue={selectedClientId}
-							name="client"
-						/>
-					</div>
-				</div>
-			</form>
-		{/snippet}
-		{#snippet footerContent()}
-			<Button variant="outline" on:click={resetForm}>Cancel</Button>
-			<Button on:click={handleSubmit}>Save</Button>
-		{/snippet}
-	</ProjectInfoCard>
 </ContentLayout>

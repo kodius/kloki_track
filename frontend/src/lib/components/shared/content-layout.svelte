@@ -1,16 +1,21 @@
 <script>
-	const { title, variant } = $props();
+	const { title, variant, children, actionButtons = null } = $props();
 </script>
 
 <div class="w-full">
 	<div class={`content-layout ${variant}`}>
-		<div class="bg-gray-100 w-full flex">
+		<div class="bg-gray-100 w-full flex justify-between items-center">
 			<div class="pt-6 pb-6">
 				<h1 class="text-4xl font-bold text-left">{title}</h1>
 			</div>
+			{#if actionButtons}
+				<div>
+					{@render actionButtons()}
+				</div>
+			{/if}
 		</div>
 		<div class="slot-content">
-			<slot></slot>
+			{@render children()}
 		</div>
 	</div>
 </div>
