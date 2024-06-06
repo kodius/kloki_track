@@ -1,5 +1,5 @@
 <script>
-	const { title, variant, children, actionButtons = null } = $props();
+	const { title, description = '', variant, children, actionButtons = null } = $props();
 </script>
 
 <div class="w-full">
@@ -7,6 +7,7 @@
 		<div class="bg-gray-100 w-full flex justify-between items-center">
 			<div class="pt-6 pb-6">
 				<h1 class="text-4xl font-bold text-left">{title}</h1>
+				<h4 class="text-sm italic text-left">{description}</h4>
 			</div>
 			{#if actionButtons}
 				<div>
@@ -15,7 +16,7 @@
 			{/if}
 		</div>
 		<div class="slot-content">
-			{@render children()}
+			{@render children?.()}
 		</div>
 	</div>
 </div>
