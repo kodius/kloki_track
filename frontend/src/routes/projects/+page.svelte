@@ -4,22 +4,22 @@
 	import type { Project } from '$lib/gql/generated/graphql';
 	import ProjectsTable from '$lib/components/projects/projects-table.svelte';
 
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import { buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 
 	import { getProjects } from '$lib/stores/projectsStore.svelte';
 
 	let projects = getProjects();
 	let localProjects = $state<Project[]>([]);
-  let projectDialogOpen = $state(false);
+	let projectDialogOpen = $state(false);
 
 	$effect(() => {
 		localProjects = projects.map((client) => ({ ...client, isEditing: false }));
 	});
 
-  function closeDialog() {
-    projectDialogOpen = false
-  }
+	function closeDialog() {
+		projectDialogOpen = false;
+	}
 </script>
 
 <ContentLayout variant="heading" title="Projects">
