@@ -1,5 +1,7 @@
 <script lang="ts">
 	import ContentLayout from '$lib/components/shared/content-layout.svelte';
+	import { Input } from '$lib/components/ui/input/index.js';
+
 	let month = 'June 2024';
 	let days = [
 		{ date: '3.', day: 'Mon', hours: '8:30h' },
@@ -11,10 +13,65 @@
 		{ date: '9.', day: 'Sun', hours: '-' }
 	];
 
-	let selected = $state(0);
+	let entries = $state({
+		'3.': [
+			{
+				projectId: 1,
+				projectName: 'Run Monitor',
+				description: 'Neki jako dobar opis',
+				timeHours: '2',
+				timeMinutes: '30'
+			},
+			{
+				projectId: 1,
+				projectName: 'Run Monitor',
+				description: 'Neki jako dobar opis 2',
+				timeHours: '4',
+				timeMinutes: '30'
+			},
+			{
+				projectId: 2,
+				projectName: 'Discovery',
+				description: 'Neki jako dobar opis projekt 2',
+				timeHours: '4',
+				timeMinutes: '45'
+			},
+			{
+				projectId: 3,
+				projectName: 'Poplin',
+				description: 'Neki jako dobar opis projekt 3',
+				timeHours: '5',
+				timeMinutes: '17'
+			}
+		]
+	});
+
+	let selectedDayIndex = $state(0);
 	function selectDay(index) {
-		selected = index;
+		selectedDayIndex = index;
 	}
+
+	let selectedDay = $derived(days[selectedDayIndex]['date']);
+
+	function groupEntries() {
+		let entriesItems = entries[selectedDay];
+
+		if (entriesItems === undefined) {
+			return {};
+		}
+
+		let grouped = {};
+		entriesItems.forEach((entry) => {
+			let projectName = entry.projectName;
+			if (!grouped[projectName]) {
+				grouped[projectName] = [];
+			}
+			grouped[projectName].push(entry);
+		});
+		return grouped;
+	}
+
+	let groupedEntries = $derived(groupEntries());
 
 	import { getProjects } from '$lib/stores/projectsStore.svelte';
 	import ProjectsSelector from '$lib/components/projects/project-selector.svelte';
@@ -25,6 +82,34 @@
 	$effect(() => {
 		localProjects = projects.map((client) => ({ ...client, isEditing: false }));
 	});
+
+	function addEntry(projectName) {
+		entries['3.'].push({
+			projectId: entries['3.'].length + 1,
+			projectName,
+			description: '',
+			timeHours: '0',
+			timeMinutes: '0'
+		});
+	}
+
+	function deleteEntry(index) {
+		entries['3.'].splice(index, 1);
+	}
+
+	function updateEntry(index, field, value) {
+		entries['3.'][index][field] = value;
+	}
+
+	function handleInput(e, index, field) {
+		const max = parseInt(e.target.getAttribute('data-max'), 10);
+		const value = e.target.value;
+		if (/^\d*$/.test(value) && (value === '' || parseInt(value, 10) <= max)) {
+			updateEntry(index, field, value);
+		} else {
+			e.target.value = entry[field];
+		}
+	}
 </script>
 
 <ContentLayout variant="heading" title="Time Tracker" description="Rapid Entry">
@@ -38,9 +123,9 @@
 				{#each days as { date, day, hours }, i}
 					<button onclick={() => selectDay(i)} class="flex-1">
 						<div
-							class="flex flex-col border
-          border-black
-          cursor-pointer {i === selected ? 'bg-green-100 border-b-green-100' : ''}"
+							class="flex flex-col border border-black cursor-pointer {i === selectedDayIndex
+								? 'bg-black border-b-black text-white'
+								: ''}"
 						>
 							<div class="text-center p-2">{date}</div>
 							<div
@@ -53,16 +138,62 @@
 					</button>
 				{/each}
 			</div>
-			<div class="flex w-full bg-green-100 border border-t-0 border-black min-h-[400px]">
-				<div class="p-4 flex-1">
-					<h2 class="text-2xl">Details for {days[selected].day}</h2>
-					<p>Date: {days[selected].date}</p>
-					<p>Hours Worked: {days[selected].hours}</p>
+
+			<div class="flex w-full bg-gray-100 border border-t-0 border-black min-h-[400px]">
+				<div class="flex-1">
+					{#if Object.keys(groupedEntries).length > 0}
+						{#each Object.entries(groupedEntries) as [projectName, projectEntries]}
+							<div class="flex justify-between items-center px-4 py-2 bg-gray-800 text-white">
+								<em class="italic">{projectName}</em>
+								<button
+									class="px-4 py-2 bg-green-500 text-white"
+									onclick={() => addEntry(projectName)}>Add New Entry</button
+								>
+							</div>
+							<div class="flex flex-col border-b">
+								{#each projectEntries as entry, index}
+									<div class="pl-8 pr-4 py-2 bg-gray-100">
+										<div class="flex justify-between mb-2 items-center">
+											<div class="flex space-x-2">
+												<Input
+													type="number"
+													data-max="99"
+													bind:value={entry.timeHours}
+													oninput={(e) => handleInput(e, index, 'timeHours')}
+													class="w-12 p-2"
+												/>
+												<span>:</span>
+												<Input
+													type="number"
+													data-max="59"
+													bind:value={entry.timeMinutes}
+													oninput={(e) => handleInput(e, index, 'timeMinutes')}
+													class="w-10 p-2"
+												/>
+											</div>
+											<Input
+												type="text"
+												bind:value={entry.description}
+												oninput={(e) => updateEntry(index, 'description', e.target.value)}
+												class="flex-1 ml-4 p-2"
+											/>
+											<button
+												class="ml-4 px-4 py-2 bg-red-500 text-white"
+												onclick={() => deleteEntry(index)}>Delete</button
+											>
+										</div>
+									</div>
+								{/each}
+							</div>
+						{/each}
+					{:else}
+						<p class="p-4">No entries.</p>
+					{/if}
 				</div>
 			</div>
 		</div>
-	</div>
-</ContentLayout>
+	</div></ContentLayout
+>
 
 <style>
 	.day-name::after {

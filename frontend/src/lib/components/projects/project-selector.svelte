@@ -1,26 +1,33 @@
 <script>
-	import * as Table from '$lib/components/ui/table';
+	import { Switch } from '$lib/components/ui/switch';
+
+	import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
+	import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+	import { Fa } from 'svelte-fa';
 
 	const { localProjects } = $props();
 </script>
 
-<Table.Root class="min-w-full">
-	<Table.Header class="bg-gray-50">
-		<Table.Row>
-			<Table.Head
-				class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-			>
-				Project
-			</Table.Head>
-		</Table.Row>
-	</Table.Header>
-	<Table.Body>
+<div class="min-w-full">
+	<div
+		class="bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+	>
+		Projects
+	</div>
+	<div>
 		{#each localProjects as project}
-			<Table.Row class="bg-white border-b">
-				<Table.Cell class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+			<div class="flex items-center justify-between bg-white border-b px-6 py-4">
+				<div class="text-sm font-medium text-gray-900">
 					{project.name}
-				</Table.Cell>
-			</Table.Row>
+				</div>
+				<div class="text-xl font-medium text-gray-900">
+					{#if project.isFavorite}
+						<Fa icon={fasStar} class="text-yellow-500" />
+					{:else}
+						<Fa icon={farStar} class="text-gray-400" />
+					{/if}
+				</div>
+			</div>
 		{/each}
-	</Table.Body>
-</Table.Root>
+	</div>
+</div>
