@@ -18,4 +18,13 @@ defmodule BackendWeb.Schema.Types do
       resolve(&BackendWeb.Resolvers.Project.resolve_client/3)
     end
   end
+
+  object :session do
+    field(:token, :string)
+  end
+
+  input_object :create_session_input do
+    field(:email, :string)
+    field(:password, non_null(:string))
+  end
 end
