@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import SingleLink from './single-link.svelte';
 	import { routes } from './routes.js';
 
@@ -9,9 +9,9 @@
 	];
 </script>
 
-<div class="w-64 bg-gray-50 p-5 shadow-lg">
+<div class="flex flex-row">
 	<nav>
-		<ul>
+		<ul class="flex gap-4">
 			{#each links as link}
 				<SingleLink href={link.href} text={link.text} />
 			{/each}

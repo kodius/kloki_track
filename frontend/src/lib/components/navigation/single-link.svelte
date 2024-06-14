@@ -1,7 +1,10 @@
 <script>
 	const { href, text } = $props();
+  import Button from "../ui/button/button.svelte";
 </script>
 
 <li class="mb-4">
-  <a href={href} class="text-gray-600 hover:text-gray-900">{text}</a>
+ <Button>
+  <a href={href} class="text-white">{text}</a>
+ </Button>
 </li>

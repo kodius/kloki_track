@@ -17,10 +17,12 @@
 </svelte:head>
 
 <div class="flex min-h-screen">
-  <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
-	<Navigation />
-	<div class="flex-1 p-5 flex flex-col items-center">
-		<slot />
+	<SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
+	<div class="flex flex-col w-full">
+		<Navigation />
+		<div class="flex-1 flex flex-col items-center">
+			<slot />
+		</div>
 	</div>
 </div>
 

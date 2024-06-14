@@ -31,7 +31,7 @@
                     {project.name}
                 </div>
                 <div class="text-xl font-medium text-gray-900">
-                    {#if project.isFavorite}
+                    {#if !project.isFavorite}
                         <Fa icon={fasStar} class="text-yellow-500" />
                     {:else}
                         <Fa icon={farStar} class="text-gray-400" />
