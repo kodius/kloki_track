@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import { createClient as graphqlClient } from '$lib/graphql-client';
+	import { getClient as graphqlClient } from '$lib/graphql-client';
 	import {
 		GetClientsDocument,
 		UpdateClientDocument,
@@ -12,32 +12,37 @@
 		CreateClientMutation
 	} from '$lib/gql/generated/graphql';
 	import { updateItemInList, replaceArrayContent, addItemToList } from '$lib/utils';
+	import { safeExecute } from '$lib/utils.ts';
 
 	let clients = $state<Client[]>([]);
 
 	export async function fetchClients() {
-		const response = await graphqlClient().request<GetClientsQuery>(GetClientsDocument);
-		replaceArrayContent(clients, response.clients);
+		safeExecute(async () => {
+			const response = await graphqlClient().request<GetClientsQuery>(GetClientsDocument);
+			replaceArrayContent(clients, response.clients);
+		});
 	}
 
 	export async function updateClient(updatedClient: Client) {
-		await graphqlClient().request<UpdateClientMutation>(UpdateClientDocument, {
-			...updatedClient
+		safeExecute(async () => {
+			await graphqlClient().request<UpdateClientMutation>(UpdateClientDocument, {
+				...updatedClient
+			});
+			updateItemInList(clients, updatedClient);
 		});
-		updateItemInList(clients, updatedClient);
 	}
 
 	export async function createClient(newClientName: String) {
-		const response = await graphqlClient().request<CreateClientMutation>(
-			CreateClientDocument,
-			{ name: newClientName }
-		);
-		addItemToList(clients, response.createClient);
+		safeExecute(async () => {
+			const response = await graphqlClient().request<CreateClientMutation>(CreateClientDocument, {
+				name: newClientName
+			});
+			addItemToList(clients, response.createClient);
+		});
 	}
 
 	export function getClients() {
 		return clients;
 	}
 
-	fetchClients();
 </script>

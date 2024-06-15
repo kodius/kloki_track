@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import { createClient as graphqlClient } from '$lib/graphql-client';
+	import { getClient as graphqlClient } from '$lib/graphql-client';
 	import {
 		GetProjectsDocument,
 		CreateProjectDocument,
@@ -12,19 +12,24 @@
 		GetProjectsQuery
 	} from '$lib/gql/generated/graphql';
 	import { updateItemInList, replaceArrayContent, addItemToList } from '$lib/utils';
+	import { safeExecute } from '$lib/utils.ts';
 
 	let projects = $state<Project[]>([]);
 
 	export async function fetchProjects() {
-		const response = await graphqlClient().request<GetProjectsQuery>(GetProjectsDocument);
-		replaceArrayContent(projects, response.projects);
+		safeExecute(async () => {
+			const response = await graphqlClient().request<GetProjectsQuery>(GetProjectsDocument);
+			replaceArrayContent(projects, response.projects);
+		});
 	}
 
 	export async function updateProject(updatedProject: Project) {
-		await graphqlClient().request<UpdateProjectMutation>(UpdateProjectDocument, {
-			...updatedProject
+		safeExecute(async () => {
+			await graphqlClient().request<UpdateProjectMutation>(UpdateProjectDocument, {
+				...updatedProject
+			});
+			updateItemInList(projects, updatedProject);
 		});
-		updateItemInList(projects, updatedProject);
 	}
 
 	export async function createProject(
@@ -32,16 +37,17 @@
 		clientId: Number,
 		publicProject: Boolean
 	) {
-		const response = await graphqlClient().request<CreateProjectMutation>(
-			CreateProjectDocument,
-			{ name: newProjectName, clientId: clientId, public: publicProject }
-		);
-		addItemToList(projects, response.createProject);
+		safeExecute(async () => {
+			const response = await graphqlClient().request<CreateProjectMutation>(CreateProjectDocument, {
+				name: newProjectName,
+				clientId: clientId,
+				public: publicProject
+			});
+			addItemToList(projects, response.createProject);
+		});
 	}
 
 	export function getProjects() {
 		return projects;
 	}
-
-	fetchProjects();
 </script>

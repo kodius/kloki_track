@@ -12,6 +12,16 @@ export function mapToValueLabel(array) {
 	}));
 }
 
+export async function safeExecute(func, ...args) {
+  try {
+    await func(...args);
+  } catch (error) {
+    console.error('An error occurred:', error);
+    // Handle errors as needed, e.g., logging, notifying the user, retry mechanisms, etc.
+    // You can customize this part to handle different types of errors differently based on your needs.
+  }
+}
+
 export async function handleAsyncOperation(operationFunc, errorMessage) {
 	try {
 		await operationFunc();

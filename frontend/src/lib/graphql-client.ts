@@ -3,11 +3,15 @@ import { getJwtToken } from '$lib/stores/authStore.svelte';
 
 const endpoint = 'http://localhost:4000/api/graphql';
 
-export function createClient() {
-	let token = getJwtToken();
-	return new GraphQLClient(endpoint, {
-		headers: {
-			Authorization: `Bearer ${token}`
-		}
-	});
+function createClient(token) {
+    return new GraphQLClient(endpoint, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+}
+
+export function getClient() {
+    const token = getJwtToken();
+    return createClient(token);
 }
