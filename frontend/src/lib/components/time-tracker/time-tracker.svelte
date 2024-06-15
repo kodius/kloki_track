@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ContentLayout from '$lib/components/shared/content-layout.svelte';
 	import { Input } from '$lib/components/ui/input/index.js';
-  import { getCurrentUser } from '$lib/stores/authStore.svelte';
+	import { getCurrentUser } from '$lib/stores/authStore.svelte';
 
 	import { Fa } from 'svelte-fa';
 	import { faTrashAlt as fasTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -56,7 +56,7 @@
 	}
 
 	let selectedDay = $derived(days[selectedDayIndex]['date']);
-  let currentUser = $derived(getCurrentUser())
+	let currentUser = $derived(getCurrentUser());
 
 	function groupEntries() {
 		let entriesItems = entries[selectedDay];
@@ -117,7 +117,11 @@
 	}
 </script>
 
-<ContentLayout variant="heading" title="Time Tracker" description="Rapid Entry - welcome {currentUser?.firstName} {currentUser?.lastName}">
+<ContentLayout
+	variant="heading"
+	title="Time Tracker"
+	description="Rapid Entry - welcome {currentUser?.firstName} {currentUser?.lastName}"
+>
 	<div class="flex-1 text-center font-bold">{month}</div>
 	<div class="flex w-full pt-4 flex-col md:flex-row">
 		<div class="flex w-full md:w-1/4 border border-primary">
@@ -199,8 +203,8 @@
 				</div>
 			</div>
 		</div>
-	</div></ContentLayout
->
+	</div>
+</ContentLayout>
 
 <style>
 	.day-name::after {

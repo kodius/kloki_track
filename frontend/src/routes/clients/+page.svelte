@@ -1,5 +1,5 @@
 <script>
-	import {getClients, updateClient, createClient } from '$lib/stores/clientsStore.svelte';
+	import { getClients, updateClient, createClient } from '$lib/stores/clientsStore.svelte';
 	import ClientTable from '$lib/components/clients/client-table.svelte';
 	import AddClientForm from '$lib/components/clients/add-client-form.svelte';
 	import { handleAsyncOperation } from '$lib/utils';

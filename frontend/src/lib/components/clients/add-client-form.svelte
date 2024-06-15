@@ -16,8 +16,8 @@
 	}
 </script>
 
-<div class="w-1/2 justify-start flex ml-1">
-	<div class="w-full xl:w-1/3 flex pb-6 justify-start">
+<div class="md:w-1/2 justify-start flex ml-1">
+	<div class="w-full flex pb-6 justify-start">
 		<div class="flex-grow">
 			<Input
 				id="name"

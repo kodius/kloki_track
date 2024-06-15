@@ -1,8 +1,8 @@
 <script>
-	const { title, description = '', variant, children, actionButtons = null } = $props();
+	const { title, description = '', variant, children, actionButtons = null, className = '' } = $props();
 </script>
 
-<div class="w-full">
+<div class="w-full {className}">
 	<div class={`content-layout ${variant}`}>
 		<div class="bg-gray-100 w-full flex justify-between items-center">
 			<div class="pt-6 pb-6">
