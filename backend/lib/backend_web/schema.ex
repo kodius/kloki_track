@@ -20,6 +20,10 @@ defmodule BackendWeb.Schema do
     field :projects, list_of(:project) do
       resolve(&Resolvers.Project.list_projects/3)
     end
+
+    field :me, :user do
+      resolve(&Resolvers.User.resolve_me/3)
+    end
   end
 
   mutation do

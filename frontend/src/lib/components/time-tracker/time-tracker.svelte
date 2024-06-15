@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ContentLayout from '$lib/components/shared/content-layout.svelte';
 	import { Input } from '$lib/components/ui/input/index.js';
+  import { getCurrentUser } from '$lib/stores/authStore.svelte';
 
 	import { Fa } from 'svelte-fa';
 	import { faTrashAlt as fasTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -55,6 +56,7 @@
 	}
 
 	let selectedDay = $derived(days[selectedDayIndex]['date']);
+  let currentUser = $derived(getCurrentUser())
 
 	function groupEntries() {
 		let entriesItems = entries[selectedDay];
@@ -115,10 +117,10 @@
 	}
 </script>
 
-<ContentLayout variant="heading" title="Time Tracker" description="Rapid Entry">
+<ContentLayout variant="heading" title="Time Tracker" description="Rapid Entry - welcome {currentUser?.firstName} {currentUser?.lastName}">
 	<div class="flex-1 text-center font-bold">{month}</div>
 	<div class="flex w-full pt-4 flex-col md:flex-row">
-		<div class="flex w-full md:w-1/4 border border-black">
+		<div class="flex w-full md:w-1/4 border border-primary">
 			<ProjectsSelector {localProjects} />
 		</div>
 		<div class="flex flex-col w-full">
@@ -126,8 +128,8 @@
 				{#each days as { date, day, hours }, i}
 					<button onclick={() => selectDay(i)} class="flex-1">
 						<div
-							class="flex flex-col border border-black cursor-pointer {i === selectedDayIndex
-								? 'bg-black border-b-black text-white'
+							class="flex flex-col border border-primary cursor-pointer {i === selectedDayIndex
+								? 'bg-primary border-b-primary text-white'
 								: ''}"
 						>
 							<div class="text-center p-2">{date}</div>
@@ -142,14 +144,14 @@
 				{/each}
 			</div>
 
-			<div class="flex w-full bg-gray-100 border border-t-0 border-black min-h-[400px]">
+			<div class="flex w-full bg-white border border-t-0 border-primary min-h-[400px]">
 				<div class="flex-1">
 					{#if Object.keys(groupedEntries).length > 0}
 						{#each Object.entries(groupedEntries) as [projectName, projectEntries]}
-							<div class="flex justify-between items-center px-4 py-2 bg-gray-800 text-white">
+							<div class="flex justify-between items-center px-4 py-2 bg-primary-600 text-white">
 								<em class="italic">{projectName}</em>
 								<button
-									class="px-4 py-2 bg-green-500 text-white"
+									class="px-4 py-2 bg-primary text-white"
 									onclick={() => addEntry(projectName)}>Add New Entry</button
 								>
 							</div>

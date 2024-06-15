@@ -5,6 +5,15 @@ query getClients {
 	}
 }
 
+query getMe{
+  me {
+    id
+    firstName
+    lastName
+
+  }
+}
+
 mutation updateClient($id: ID!, $name: String) {
 	updateClient(id: $id, name: $name) {
 		id

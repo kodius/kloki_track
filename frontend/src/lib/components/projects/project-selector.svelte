@@ -23,7 +23,7 @@
             <div class="flex items-center justify-between bg-white border-b px-6 py-4">
                 <div class="flex items-center text-sm font-medium text-gray-900">
                     <button
-                        class="mr-2 text-green-500 hover:text-green-700"
+                        class="mr-2 text-primary-500 hover:text-primary-700"
                         on:click={() => addEntryToProject(project.id)}
                     >
                         <Fa icon={fasPlusCircle} class="text-2xl"/>

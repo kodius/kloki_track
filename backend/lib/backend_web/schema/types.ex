@@ -19,6 +19,14 @@ defmodule BackendWeb.Schema.Types do
     end
   end
 
+  object :user do
+    field :id, non_null(:id)
+    field :first_name, :string
+    field :last_name, :string
+    field :clients, list_of(:client)
+    field :projects, list_of(:project)
+  end
+
   object :session do
     field(:token, :string)
   end
